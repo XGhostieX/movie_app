@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/theme/app_theme.dart';
 import 'features/splash/presentation/views/splash_view.dart';
+import 'features/splash/presentation/views_model/splash_cubit/splash_cubit.dart';
 
 void main() {
   runApp(const MovieApp());
@@ -16,11 +18,14 @@ class MovieApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
-    return MaterialApp(
-      title: 'Movie App',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme,
-      home: const SplashView(),
+    return BlocProvider(
+      create: (context) => SplashCubit()..checkAuth(),
+      child: MaterialApp(
+        title: 'Movie App',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme,
+        home: const SplashView(),
+      ),
     );
   }
 }

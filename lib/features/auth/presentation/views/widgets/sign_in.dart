@@ -6,7 +6,7 @@ import 'package:reactive_button/reactive_button.dart';
 import '../../../../../core/theme/app_colors.dart';
 // import '../../../../../core/usecases/signup_usecase.dart';
 import '../../../../../core/utils/app_navigator.dart';
-import '../../../../../core/utils/functions/display_message.dart';
+// import '../../../../../core/utils/functions/display_message.dart';
 // import '../../../../../core/utils/service_locator.dart';
 import '../../../../home/presentation/views/home_view.dart';
 import 'sign_up.dart';
@@ -55,7 +55,8 @@ class SignIn extends StatelessWidget {
                   AppNavigator.pushAndRemove(context, const HomeView()),
               onSuccess: () =>
                   AppNavigator.pushAndRemove(context, const HomeView()),
-              onFailure: (error) => displayMessage(error, context),
+              // onFailure: (error) => displayMessage(error, context),
+              onFailure: (error) {},
             ),
             const SizedBox(height: 20),
             Text.rich(

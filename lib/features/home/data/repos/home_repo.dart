@@ -1,5 +1,10 @@
-// import '../../../../core/models/car.dart';
+import 'package:dartz/dartz.dart';
 
-// abstract class HomeRepo {
-//   Future<List<Car>> fetchCars();
-// }
+abstract class HomeRepo {
+  Future<Either> fetchTrendingMovies();
+  Future<Either> fetchPopularMovies();
+  Future<Either> fetchPopularTv();
+  Future<Either> fetchTopRatedMovies();
+  Future<Either> fetchTopRatedTv();
+  Future<Either> fetchUpcomingMovies();
+}

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../views_model/top_rated_tv_cubit/top_rated_tv_cubit.dart';
-import 'tv_card.dart';
+import '../../../../../core/widgets/tv_card.dart';
 
 class TopRatedTvListview extends StatelessWidget {
   const TopRatedTvListview({super.key});

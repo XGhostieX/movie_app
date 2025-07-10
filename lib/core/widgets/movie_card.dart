@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/models/movie.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/utils/assets.dart';
+import '../models/movie.dart';
+import '../theme/app_colors.dart';
+import '../utils/app_navigator.dart';
+import '../utils/assets.dart';
+import '../../features/details/presentation/views/movie_details_view.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -11,37 +14,50 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => AppNavigator.push(context, MovieDetailsView(movie: movie)),
       child: Stack(
         children: [
           Container(
-            width: 180,
+            width: 167,
             decoration: BoxDecoration(
               color: AppColors.background,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  flex: 4,
+                // Expanded(
+                //   flex: 4,
 
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                          Assets.baseImageUrl + movie.posterPath!,
-                        ),
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       color: Colors.transparent,
+                //       image: DecorationImage(
+                //         fit: BoxFit.fill,
+                //         image: NetworkImage(
+                //           Assets.baseImageUrl + movie.posterPath!,
+                //         ),
+                //       ),
+                //       borderRadius: const BorderRadius.all(Radius.circular(10)),
+                //     ),
+                //   ),
+                // ),
+                Expanded(
+                  flex: 5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CachedNetworkImage(
+                      // height: 100,
+                      // width: 100,
+                      imageUrl: Assets.baseImageUrl + movie.posterPath!,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error_rounded),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  // flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -66,7 +82,6 @@ class MovieCard extends StatelessWidget {
             right: 10,
             top: 10,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const Icon(Icons.star, size: 18, color: Colors.amber),
                 Text(

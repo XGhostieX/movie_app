@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../views_model/top_rated_movies_cubit/top_rated_movies_cubit.dart';
-import 'movie_card.dart';
+import '../../../../../core/widgets/movie_card.dart';
 
 class TopRatedMoviesListview extends StatelessWidget {
   const TopRatedMoviesListview({super.key});

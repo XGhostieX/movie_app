@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_colors.dart';
+// import '../theme/app_colors.dart';
 
 class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
@@ -43,7 +43,7 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
                     height: 50,
                     width: 50,
                     decoration: const BoxDecoration(
-                      color: AppColors.secondBackground,
+                      // color: AppColors.secondBackground,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

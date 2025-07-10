@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../features/auth/data/repos/auth_repo.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
+import '../../features/details/data/repos/details_repo.dart';
+import '../../features/details/data/repos/details_repo_impl.dart';
 import '../../features/home/data/repos/home_repo.dart';
 import '../../features/home/data/repos/home_repo_impl.dart';
 import '../usecases/is_authenticated_usecase.dart';
@@ -26,6 +28,7 @@ void setup() {
   getIt.registerSingleton<IsAuthenticatedUsecase>(IsAuthenticatedUsecase());
   getIt.registerSingleton<ApiService>(ApiService());
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl());
+  getIt.registerSingleton<DetailsRepo>(DetailsRepoImpl());
   // getIt.registerSingleton<FirebaseService>(
   //   FirebaseService(firestore: getIt.get<FirebaseFirestore>()),
   // );

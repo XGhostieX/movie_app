@@ -1,6 +1,7 @@
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/core/widgets/carousel_shimmer_skeleton.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/assets.dart';
@@ -14,7 +15,7 @@ class TrendingMovies extends StatelessWidget {
     return BlocBuilder<TrendingMoviesCubit, TrendingMoviesState>(
       builder: (context, state) {
         if (state is TrendingMoviesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const CarouselShimmerSkeleton();
         } else if (state is TrendingMoviesSuccess) {
           return FanCarouselImageSlider.sliderType1(
             imagesLink: state.movies

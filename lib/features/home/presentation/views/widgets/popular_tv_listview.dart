@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../views_model/popular_tv_cubit/popular_tv_cubit.dart';
 import '../../../../../core/widgets/tv_card.dart';
 
@@ -12,7 +13,7 @@ class PopularTvListview extends StatelessWidget {
     return BlocBuilder<PopularTvCubit, PopularTvState>(
       builder: (context, state) {
         if (state is PopularTvLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is PopularTvSuccess) {
           return SizedBox(
             height: 300,

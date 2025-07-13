@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/widgets/movie_card.dart';
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../views_model/recommendations_movies_cubit/recommendations_movies_cubit.dart';
 
 class MovieRecommendations extends StatelessWidget {
@@ -12,7 +13,7 @@ class MovieRecommendations extends StatelessWidget {
     return BlocBuilder<RecommendationsMoviesCubit, RecommendationsMoviesState>(
       builder: (context, state) {
         if (state is RecommendationsMoviesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is RecommendationsMoviesSuccess) {
           return SizedBox(
             height: 300,

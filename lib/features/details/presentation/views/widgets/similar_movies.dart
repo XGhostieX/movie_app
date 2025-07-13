@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/widgets/movie_card.dart';
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../views_model/similar_movies_cubit/similar_movies_cubit.dart';
 
 class SimilarMovies extends StatelessWidget {
@@ -12,7 +13,7 @@ class SimilarMovies extends StatelessWidget {
     return BlocBuilder<SimilarMoviesCubit, SimilarMoviesState>(
       builder: (context, state) {
         if (state is SimilarMoviesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is SimilarMoviesSuccess) {
           return SizedBox(
             height: 300,

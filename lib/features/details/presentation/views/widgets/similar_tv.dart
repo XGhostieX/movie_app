@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../../core/widgets/tv_card.dart';
 import '../../views_model/similar_tv_cubit/similar_tv_cubit.dart';
 
@@ -12,7 +13,7 @@ class SimilarTv extends StatelessWidget {
     return BlocBuilder<SimilarTvCubit, SimilarTvState>(
       builder: (context, state) {
         if (state is SimilarTvLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is SimilarTvSuccess) {
           return SizedBox(
             height: 300,

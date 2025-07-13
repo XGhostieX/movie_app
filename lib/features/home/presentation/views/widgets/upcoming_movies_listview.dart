@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../views_model/upcoming_movies_cubit/upcoming_movies_cubit.dart';
 import '../../../../../core/widgets/movie_card.dart';
 
@@ -12,7 +13,7 @@ class UpcomingMoviesListview extends StatelessWidget {
     return BlocBuilder<UpcomingMoviesCubit, UpcomingMoviesState>(
       builder: (context, state) {
         if (state is UpcomingMoviesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is UpcomingMoviesSuccess) {
           return SizedBox(
             height: 300,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../../core/widgets/tv_card.dart';
 import '../../views_model/recommendations_tv_cubit/recommendations_tv_cubit.dart';
 
@@ -12,7 +13,7 @@ class TvRecommendations extends StatelessWidget {
     return BlocBuilder<RecommendationsTvCubit, RecommendationsTvState>(
       builder: (context, state) {
         if (state is RecommendationsTvLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerSkeleton();
         } else if (state is RecommendationsTvSuccess) {
           return SizedBox(
             height: 300,

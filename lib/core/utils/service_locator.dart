@@ -7,6 +7,8 @@ import '../../features/details/data/repos/details_repo.dart';
 import '../../features/details/data/repos/details_repo_impl.dart';
 import '../../features/home/data/repos/home_repo.dart';
 import '../../features/home/data/repos/home_repo_impl.dart';
+import '../../features/search/data/repos/search_repo.dart';
+import '../../features/search/data/repos/search_repo_impl.dart';
 import '../usecases/is_authenticated_usecase.dart';
 import '../usecases/signin_usecase.dart';
 import '../usecases/signup_usecase.dart';
@@ -29,6 +31,7 @@ void setup() {
   getIt.registerSingleton<ApiService>(ApiService());
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl());
   getIt.registerSingleton<DetailsRepo>(DetailsRepoImpl());
+  getIt.registerSingleton<SearchRepo>(SearchRepoImpl());
   // getIt.registerSingleton<FirebaseService>(
   //   FirebaseService(firestore: getIt.get<FirebaseFirestore>()),
   // );

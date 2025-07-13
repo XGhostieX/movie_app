@@ -50,9 +50,9 @@ class MovieCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       // height: 100,
                       // width: 100,
-                      imageUrl: Assets.baseImageUrl + movie.posterPath!,
+                      imageUrl: '${Assets.baseImageUrl}${movie.posterPath}',
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error_rounded),
+                          const Center(child: Icon(Icons.error_rounded)),
                     ),
                   ),
                 ),

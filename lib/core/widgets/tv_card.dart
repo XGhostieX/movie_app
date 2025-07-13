@@ -50,9 +50,9 @@ class TvCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       // height: 100,
                       // width: 100,
-                      imageUrl: Assets.baseImageUrl + tv.posterPath!,
+                      imageUrl: '${Assets.baseImageUrl}${tv.posterPath}',
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error_rounded),
+                          const Center(child: Icon(Icons.error_rounded)),
                     ),
                   ),
                 ),

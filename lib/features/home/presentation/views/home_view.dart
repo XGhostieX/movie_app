@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/utils/app_navigator.dart';
 import '../../../../core/utils/assets.dart';
 import '../../../../core/widgets/basic_appbar.dart';
+import '../../../search/presentation/views/search_view.dart';
 import '../views_model/popular_movies_cubit/popular_movies_cubit.dart';
 import '../views_model/popular_tv_cubit/popular_tv_cubit.dart';
 import '../views_model/top_rated_movies_cubit/top_rated_movies_cubit.dart';
@@ -38,6 +40,10 @@ class HomeView extends StatelessWidget {
         appBar: BasicAppbar(
           hideBack: true,
           title: SvgPicture.asset(Assets.logo),
+          action: IconButton(
+            onPressed: () => AppNavigator.push(context, const SearchView()),
+            icon: const Icon(Icons.search_rounded),
+          ),
         ),
         body: const HomeViewBody(),
       ),

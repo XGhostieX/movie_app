@@ -39,7 +39,8 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either> fetchTrendingMovies() async {
     try {
       var data = await getIt.get<ApiService>().get(
-        endPoint: 'movie/now_playing',
+        endPoint: 'trending/movie/week',
+        // endPoint: 'movie/now_playing',
       );
       List<Movie> movies = [];
       for (var i = 0; i < 12; i++) {

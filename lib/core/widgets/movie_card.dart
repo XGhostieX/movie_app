@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../models/movie.dart';
 import '../theme/app_colors.dart';
-import '../utils/app_navigator.dart';
+import '../utils/app_router.dart';
 import '../utils/assets.dart';
-import '../../features/details/presentation/views/movie_details_view.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -14,7 +14,8 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AppNavigator.push(context, MovieDetailsView(movie: movie)),
+      onTap: () =>
+          GoRouter.of(context).push(AppRouter.kMovieDetailsView, extra: movie),
       child: Stack(
         children: [
           Container(

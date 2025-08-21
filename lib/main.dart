@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/theme/app_theme.dart';
+import 'core/utils/app_router.dart';
 import 'core/utils/service_locator.dart';
-import 'features/splash/presentation/views/splash_view.dart';
 import 'features/splash/presentation/views_model/splash_cubit/splash_cubit.dart';
 
 void main() {
@@ -23,11 +23,11 @@ class MovieApp extends StatelessWidget {
     );
     return BlocProvider(
       create: (context) => SplashCubit()..checkAuth(),
-      child: MaterialApp(
-        title: 'Movie App',
+      child: MaterialApp.router(
+        title: 'Moviezone',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: const SplashView(),
+        routerConfig: AppRouter.router,
       ),
     );
   }

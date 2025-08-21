@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/core/utils/app_navigator.dart';
-import 'package:movie_app/features/home/presentation/views/home_view.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/assets.dart';
-import '../../../../auth/presentation/views/auth_view.dart' show AuthView;
 import '../../views_model/splash_cubit/splash_cubit.dart';
 
 class SplashViewBody extends StatelessWidget {
@@ -15,9 +14,9 @@ class SplashViewBody extends StatelessWidget {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is Unauthenticated) {
-          AppNavigator.pushReplacement(context, const AuthView());
+          GoRouter.of(context).pushReplacement(AppRouter.kAuthView);
         } else if (state is Authenticated) {
-          AppNavigator.pushReplacement(context, const HomeView());
+          GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
         }
       },
       child: Stack(

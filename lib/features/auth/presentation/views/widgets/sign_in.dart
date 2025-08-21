@@ -1,15 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:reactive_button/reactive_button.dart';
 
 // import '../../../../../core/models/auth.dart';
 import '../../../../../core/theme/app_colors.dart';
 // import '../../../../../core/usecases/signup_usecase.dart';
-import '../../../../../core/utils/app_navigator.dart';
 // import '../../../../../core/utils/functions/display_message.dart';
 // import '../../../../../core/utils/service_locator.dart';
-import '../../../../home/presentation/views/home_view.dart';
-import 'sign_up.dart';
+import '../../../../../core/utils/app_router.dart';
 
 class SignIn extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -52,10 +51,10 @@ class SignIn extends StatelessWidget {
                 //     password: _passwordController.text,
                 //   ),
                 // ),
-                onPressed: () async =>
-                    AppNavigator.pushAndRemove(context, const HomeView()),
+                onPressed: () =>
+                    GoRouter.of(context).pushReplacement(AppRouter.kHomeView),
                 onSuccess: () =>
-                    AppNavigator.pushAndRemove(context, const HomeView()),
+                    GoRouter.of(context).pushReplacement(AppRouter.kHomeView),
                 // onFailure: (error) => displayMessage(error, context),
                 onFailure: (error) {},
               ),
@@ -68,7 +67,9 @@ class SignIn extends StatelessWidget {
                       text: '  Sign Up',
                       style: const TextStyle(color: Colors.blue),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => AppNavigator.push(context, SignUp()),
+                        ..onTap = () => GoRouter.of(
+                          context,
+                        ).pushReplacement(AppRouter.kSignUp),
                     ),
                   ],
                 ),

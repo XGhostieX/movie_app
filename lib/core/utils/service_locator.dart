@@ -15,6 +15,7 @@ import '../usecases/signup_usecase.dart';
 import 'api_service.dart';
 import 'auth_api_service.dart';
 import 'dio_client.dart';
+import 'mapper.dart';
 
 // import '../../features/home/data/repos/home_repo_impl.dart';
 
@@ -32,6 +33,7 @@ void setup() {
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl());
   getIt.registerSingleton<DetailsRepo>(DetailsRepoImpl());
   getIt.registerSingleton<SearchRepo>(SearchRepoImpl());
+  getIt.registerSingleton<Mapper>(MapperImpl());
   // getIt.registerSingleton<FirebaseService>(
   //   FirebaseService(firestore: getIt.get<FirebaseFirestore>()),
   // );

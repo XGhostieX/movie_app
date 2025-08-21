@@ -12,7 +12,7 @@ class PopularTvCubit extends Cubit<PopularTvState> {
 
   Future<void> fetchPopularTv() async {
     emit(PopularTvLoading());
-    var result = await getIt.get<HomeRepo>().fetchPopularTv();
+    var result = await getIt.get<HomeRepo>().fetchTv('tv/popular');
     result.fold(
       (failure) => emit(PopularTvFailure(failure)),
       (tv) => emit(PopularTvSuccess(tv)),

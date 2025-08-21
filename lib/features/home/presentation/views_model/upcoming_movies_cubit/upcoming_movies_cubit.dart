@@ -11,7 +11,7 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
   UpcomingMoviesCubit() : super(UpcomingMoviesInitial());
   Future<void> fetchUpcomingMovies() async {
     emit(UpcomingMoviesLoading());
-    var result = await getIt.get<HomeRepo>().fetchUpcomingMovies();
+    var result = await getIt.get<HomeRepo>().fetchMovies('movie/upcoming');
     result.fold(
       (failure) => emit(UpcomingMoviesFailure(failure)),
       (movies) => emit(UpcomingMoviesSuccess(movies)),

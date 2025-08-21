@@ -12,7 +12,7 @@ class PopularMoviesCubit extends Cubit<PopularMoviesState> {
 
   Future<void> fetchPopularMovies() async {
     emit(PopularMoviesLoading());
-    var result = await getIt.get<HomeRepo>().fetchPopularMovies();
+    var result = await getIt.get<HomeRepo>().fetchMovies('movie/popular');
     result.fold(
       (failure) => emit(PopularMoviesFailure(failure)),
       (movies) => emit(PopularMoviesSuccess(movies)),

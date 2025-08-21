@@ -11,10 +11,10 @@ class TrendingMoviesCubit extends Cubit<TrendingMoviesState> {
   TrendingMoviesCubit() : super(TrendingMoviesInitial());
   Future<void> fetchTrendingMovies() async {
     emit(TrendingMoviesLoading());
-    var result = await getIt.get<HomeRepo>().fetchTrendingMovies();
+    var result = await getIt.get<HomeRepo>().fetchMovies('trending/movie/week');
     result.fold(
       (failure) => emit(TrendingMoviesFailure(failure)),
-      (movies) => emit(TrendingMoviesSuccess(movies)),
+      (movies) => emit(TrendingMoviesSuccess(movies.sublist(0, 13))),
     );
   }
 }

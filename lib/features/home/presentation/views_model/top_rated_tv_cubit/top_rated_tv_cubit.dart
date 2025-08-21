@@ -11,7 +11,7 @@ class TopRatedTvCubit extends Cubit<TopRatedTvState> {
   TopRatedTvCubit() : super(TopRatedTvInitial());
   Future<void> fetchTopRatedTv() async {
     emit(TopRatedTvLoading());
-    var result = await getIt.get<HomeRepo>().fetchTopRatedTv();
+    var result = await getIt.get<HomeRepo>().fetchTv('tv/top_rated');
     result.fold(
       (failure) => emit(TopRatedTvFailure(failure)),
       (tv) => emit(TopRatedTvSuccess(tv)),

@@ -29,7 +29,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchSearchMovies(String qurey) async {
     emit(SearchLoading());
-    var result = await getIt.get<SearchRepo>().fetchSearchMovies(qurey);
+    var result = await getIt.get<SearchRepo>().fetchMovies(qurey);
     result.fold(
       (failure) => emit(SearchFailure(failure)),
       (movies) => emit(SearchMoviesSuccess(movies)),
@@ -38,7 +38,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchSearchTv(String qurey) async {
     emit(SearchLoading());
-    var result = await getIt.get<SearchRepo>().fetchSearchTv(qurey);
+    var result = await getIt.get<SearchRepo>().fetchTv(qurey);
     result.fold(
       (failure) => emit(SearchFailure(failure)),
       (tv) => emit(SearchTvSuccess(tv)),

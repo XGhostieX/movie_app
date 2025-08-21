@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 abstract class SearchRepo {
-  Future<Either> fetchSearchMovies(String qurey);
-  Future<Either> fetchSearchTv(String qurey);
+  Future<Either> fetchMovies(String qurey);
+  Future<Either> fetchTv(String qurey);
 }

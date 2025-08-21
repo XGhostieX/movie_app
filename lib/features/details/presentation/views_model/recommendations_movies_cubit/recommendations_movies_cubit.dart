@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/models/movie.dart';
 import '../../../../../core/utils/service_locator.dart';
-import '../../../data/repos/details_repo.dart';
+import '../../../../home/data/repos/home_repo.dart';
 
 part 'recommendations_movies_state.dart';
 
@@ -12,7 +12,9 @@ class RecommendationsMoviesCubit extends Cubit<RecommendationsMoviesState> {
 
   Future<void> fetchRecommendationsMovies(int id) async {
     emit(RecommendationsMoviesLoading());
-    var result = await getIt.get<DetailsRepo>().fetchRecommendationsMovies(id);
+    var result = await getIt.get<HomeRepo>().fetchMovies(
+      'movie/$id/recommendations',
+    );
     result.fold(
       (failure) => emit(RecommendationsMoviesFailure(failure)),
       (movies) => emit(RecommendationsMoviesSuccess(movies)),

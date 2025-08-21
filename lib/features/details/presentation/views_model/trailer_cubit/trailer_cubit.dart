@@ -13,7 +13,9 @@ class TrailerCubit extends Cubit<TrailerState> {
 
   Future<void> fetchMovieTrailer(int id) async {
     emit(TrailerLoading());
-    var result = await getIt.get<DetailsRepo>().fetchMovieTrailer(id);
+    var result = await getIt.get<DetailsRepo>().fetchTrailer(
+      'movie/$id/videos',
+    );
     result.fold((failure) => emit(TrailerFailure(failure)), (trailers) {
       Trailer trailer = trailers;
       YoutubePlayerController controller = YoutubePlayerController(
@@ -26,7 +28,7 @@ class TrailerCubit extends Cubit<TrailerState> {
 
   Future<void> fetchTvTrailer(int id) async {
     emit(TrailerLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTvTrailer(id);
+    var result = await getIt.get<DetailsRepo>().fetchTrailer('tv/$id/videos');
     result.fold((failure) => emit(TrailerFailure(failure)), (trailers) {
       Trailer trailer = trailers;
       YoutubePlayerController controller = YoutubePlayerController(

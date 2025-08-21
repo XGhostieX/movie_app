@@ -12,7 +12,7 @@ class CastCubit extends Cubit<CastState> {
 
   Future<void> fetchMovieCast(int id) async {
     emit(CastLoading());
-    var result = await getIt.get<DetailsRepo>().fetchMovieCast(id);
+    var result = await getIt.get<DetailsRepo>().fetchCast('movie/$id/credits');
     result.fold(
       (failure) => emit(CastFailure(failure)),
       (cast) => emit(CastSuccess(cast)),
@@ -21,7 +21,7 @@ class CastCubit extends Cubit<CastState> {
 
   Future<void> fetchTvCast(int id) async {
     emit(CastLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTvCast(id);
+    var result = await getIt.get<DetailsRepo>().fetchCast('tv/$id/credits');
     result.fold(
       (failure) => emit(CastFailure(failure)),
       (cast) => emit(CastSuccess(cast)),

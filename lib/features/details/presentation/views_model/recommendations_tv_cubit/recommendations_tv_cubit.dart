@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/models/tv.dart';
 import '../../../../../core/utils/service_locator.dart';
-import '../../../data/repos/details_repo.dart';
+import '../../../../home/data/repos/home_repo.dart';
 
 part 'recommendations_tv_state.dart';
 
@@ -12,7 +12,7 @@ class RecommendationsTvCubit extends Cubit<RecommendationsTvState> {
 
   Future<void> fetchRecommendationsTv(int id) async {
     emit(RecommendationsTvLoading());
-    var result = await getIt.get<DetailsRepo>().fetchRecommendationsTv(id);
+    var result = await getIt.get<HomeRepo>().fetchTv('tv/$id/recommendations');
     result.fold(
       (failure) => emit(RecommendationsTvFailure(failure)),
       (tv) => emit(RecommendationsTvSuccess(tv)),

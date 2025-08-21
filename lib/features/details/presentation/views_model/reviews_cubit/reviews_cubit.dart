@@ -12,7 +12,9 @@ class ReviewsCubit extends Cubit<ReviewsState> {
 
   Future<void> fetchMovieReviews(int id) async {
     emit(ReviewsLoading());
-    var result = await getIt.get<DetailsRepo>().fetchMovieReviews(id);
+    var result = await getIt.get<DetailsRepo>().fetchReviews(
+      'movie/$id/reviews',
+    );
     result.fold(
       (failure) => emit(ReviewsFailure(failure)),
       (reviews) => emit(ReviewsSuccess(reviews)),
@@ -21,7 +23,7 @@ class ReviewsCubit extends Cubit<ReviewsState> {
 
   Future<void> fetchTvReviews(int id) async {
     emit(ReviewsLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTvReviews(id);
+    var result = await getIt.get<DetailsRepo>().fetchReviews('tv/$id/reviews');
     result.fold(
       (failure) => emit(ReviewsFailure(failure)),
       (reviews) => emit(ReviewsSuccess(reviews)),

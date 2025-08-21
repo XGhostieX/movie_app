@@ -12,7 +12,7 @@ class GenresCubit extends Cubit<GenresState> {
 
   Future<void> fetchMovieGenres(int id) async {
     emit(GenresLoading());
-    var result = await getIt.get<DetailsRepo>().fetchMovieGenres(id);
+    var result = await getIt.get<DetailsRepo>().fetchGenres('movie/$id');
     result.fold(
       (failure) => emit(GenresFailure(failure)),
       (genres) => emit(GenresSuccess(genres)),
@@ -21,7 +21,7 @@ class GenresCubit extends Cubit<GenresState> {
 
   Future<void> fetchTvGenres(int id) async {
     emit(GenresLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTvGenres(id);
+    var result = await getIt.get<DetailsRepo>().fetchGenres('tv/$id');
     result.fold(
       (failure) => emit(GenresFailure(failure)),
       (keywords) => emit(GenresSuccess(keywords)),

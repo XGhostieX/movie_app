@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/models/auth.dart';
+import '../../../../core/models/user.dart';
 
 abstract class AuthRepo {
-  Future<Either> signin(Auth auth);
-  Future<Either> signup(Auth auth);
-  Future<bool> isAuthenticated();
+  Future<Either> signIn(User user);
+  Future<Either> signUp(User user);
 }

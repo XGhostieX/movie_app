@@ -1,20 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reactive_button/reactive_button.dart';
 
-// import '../../../../../core/models/auth.dart';
-import '../../../../../core/theme/app_colors.dart';
-// import '../../../../../core/usecases/signup_usecase.dart';
-// import '../../../../../core/utils/functions/display_message.dart';
-// import '../../../../../core/utils/service_locator.dart';
+import '../../../../../core/models/user.dart';
 import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/functions/display_message.dart';
+import '../../../../../core/utils/service_locator.dart';
+import '../../../data/repos/auth_repo.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,62 +26,103 @@ class SignIn extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.only(top: 200, right: 16, left: 16),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Sign In',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              ),
-              const SizedBox(height: 30),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(hintText: 'Email'),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(hintText: 'Password'),
-                obscureText: true,
-              ),
-              const SizedBox(height: 60),
-              ReactiveButton(
-                title: 'Sign In',
-                activeColor: AppColors.primary,
-                // onPressed: () async => await getIt<SignupUsecase>().call(
-                //   params: Auth(
-                //     email: _emailController.text,
-                //     password: _passwordController.text,
-                //   ),
-                // ),
-                onPressed: () =>
-                    GoRouter.of(context).pushReplacement(AppRouter.kHomeView),
-                onSuccess: () =>
-                    GoRouter.of(context).pushReplacement(AppRouter.kHomeView),
-                // onFailure: (error) => displayMessage(error, context),
-                onFailure: (error) {},
-              ),
-              const SizedBox(height: 20),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(text: 'Don\'t You Have An Account ?'),
-                    TextSpan(
-                      text: '  Sign Up',
-                      style: const TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => GoRouter.of(
-                          context,
-                        ).pushReplacement(AppRouter.kSignUp),
-                    ),
-                  ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Sign In',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-              ),
-            ],
+                const SizedBox(height: 30),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(hintText: 'Email'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(hintText: 'Password'),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 60),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        var result = await getIt<AuthRepo>().signIn(
+                          User(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+                        result.fold((left) => displayMessage(left, true), (
+                          right,
+                        ) {
+                          displayMessage(right, false);
+                          GoRouter.of(
+                            context,
+                          ).pushReplacement(AppRouter.kHomeView);
+                        });
+                      }
+                    },
+                    child: const Text('Login'),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(text: 'Don\'t You Have An Account ?'),
+                      TextSpan(
+                        text: '  Sign Up',
+                        style: const TextStyle(color: Colors.blue),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => GoRouter.of(
+                            context,
+                          ).pushReplacement(AppRouter.kSignUp),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

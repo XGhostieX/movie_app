@@ -1,43 +1,39 @@
 import 'package:dartz/dartz.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/models/auth.dart';
-import '../../../../core/utils/auth_api_service.dart';
+import '../../../../core/models/user.dart';
+import '../../../../core/utils/database_helper.dart';
 import '../../../../core/utils/service_locator.dart';
 import 'auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo {
   @override
-  Future<Either> signin(Auth auth) async {
-    var data = await getIt<AuthApiService>().signin(auth);
-    return data.fold((error) => Left(error), (data) async {
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('token', data['user']['token']);
-      return Right(data);
-    });
-  }
-
-  @override
-  Future<Either> signup(Auth auth) async {
-    var data = await getIt<AuthApiService>().signup(auth);
-    return data.fold((error) => Left(error), (data) async {
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('token', data['user']['token']);
-      return Right(data);
-    });
-  }
-
-  @override
-  Future<bool> isAuthenticated() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString('token');
-    if (token == null) {
-      return false;
+  Future<Either> signIn(User user) async {
+    final db = await getIt.get<DatabaseHelper>().initDatabase();
+    final result = await db.query(
+      'users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [user.email, user.password],
+    );
+    if (result.isNotEmpty) {
+      return right('Sign In Was Successfull');
     } else {
-      return true;
+      return left('User Not Found');
+    }
+  }
+
+  @override
+  Future<Either> signUp(User user) async {
+    final db = await getIt.get<DatabaseHelper>().initDatabase();
+    final result = await db.query(
+      'users',
+      where: 'email = ?',
+      whereArgs: [user.email],
+    );
+    if (result.isNotEmpty) {
+      return left('Email already exists');
+    } else {
+      await db.insert('users', user.toMap());
+      return right('Sign Up Was Successfull');
     }
   }
 }

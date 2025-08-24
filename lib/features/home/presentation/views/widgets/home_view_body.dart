@@ -18,8 +18,8 @@ class HomeViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CategoryTitle(title: 'Trending 🔥'),
+          SizedBox(height: 10),
           TrendingMovies(),
-          SizedBox(height: 15),
           CategoryTitle(title: 'Popular Movies'),
           SizedBox(height: 15),
           PopularMoviesListview(),

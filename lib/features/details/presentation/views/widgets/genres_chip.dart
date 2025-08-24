@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/genres_shimmer_skeleton.dart';
 import '../../views_model/genres_cubit/genres_cubit.dart';
 
 class GenresChip extends StatelessWidget {
@@ -11,7 +12,7 @@ class GenresChip extends StatelessWidget {
     return BlocBuilder<GenresCubit, GenresState>(
       builder: (context, state) {
         if (state is GenresLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const GenresShimmerSkeleton();
         } else if (state is GenresSuccess) {
           return Wrap(
             spacing: 10,

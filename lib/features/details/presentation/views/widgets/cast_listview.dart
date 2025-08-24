@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/assets.dart';
+import '../../../../../core/widgets/cast_shimmer_skeleton.dart';
 import '../../views_model/cast_cubit/cast_cubit.dart';
 
 class CastListview extends StatelessWidget {
@@ -13,7 +14,7 @@ class CastListview extends StatelessWidget {
     return BlocBuilder<CastCubit, CastState>(
       builder: (context, state) {
         if (state is CastLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const CastShimmerSkeleton();
         } else if (state is CastSuccess) {
           return SizedBox(
             height: 200,

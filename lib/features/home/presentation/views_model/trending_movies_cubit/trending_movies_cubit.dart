@@ -14,7 +14,7 @@ class TrendingMoviesCubit extends Cubit<TrendingMoviesState> {
     var result = await getIt.get<HomeRepo>().fetchMovies('trending/movie/week');
     result.fold(
       (failure) => emit(TrendingMoviesFailure(failure)),
-      (movies) => emit(TrendingMoviesSuccess(movies.sublist(0, 13))),
+      (movies) => emit(TrendingMoviesSuccess(movies.sublist(0, 15))),
     );
   }
 }

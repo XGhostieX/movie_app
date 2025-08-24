@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/widgets/trailer_shimmer_skeleton.dart';
 import '../../views_model/trailer_cubit/trailer_cubit.dart';
 
 class VideoPlayer extends StatelessWidget {
@@ -13,7 +14,7 @@ class VideoPlayer extends StatelessWidget {
     return BlocBuilder<TrailerCubit, TrailerState>(
       builder: (context, state) {
         if (state is TrailerLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const TrailerShimmerSkeleton();
         } else if (state is TrailerSuccess) {
           return YoutubePlayer(
             controller: state.youtubePlayerController,

@@ -11,6 +11,7 @@ import '../../../../core/utils/assets.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/basic_appbar.dart';
 import '../../data/repos/home_repo.dart';
+import '../views_model/trending_movies_cubit/trending_movies_cubit.dart';
 import 'widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
@@ -18,19 +19,30 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GenericCubit()
-        ..fetchData<List<Movie>>(
-          getIt.get<HomeRepo>().fetchMovies(Assets.popularMovies),
-        )
-        ..fetchData<List<Movie>>(
-          getIt.get<HomeRepo>().fetchMovies(Assets.topRatedMovies),
-        )
-        ..fetchData<List<Tv>>(getIt.get<HomeRepo>().fetchTv(Assets.popularTv))
-        ..fetchData<List<Tv>>(getIt.get<HomeRepo>().fetchTv(Assets.topRatedTv))
-        ..fetchData<List<Movie>>(
-          getIt.get<HomeRepo>().fetchMovies(Assets.upcomingMovies),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TrendingMoviesCubit()..fetchTrendingMovies(),
         ),
+        BlocProvider(
+          create: (context) => GenericCubit()
+            ..fetchData<List<Movie>>(
+              getIt.get<HomeRepo>().fetchMovies(Assets.popularMovies),
+            )
+            ..fetchData<List<Movie>>(
+              getIt.get<HomeRepo>().fetchMovies(Assets.topRatedMovies),
+            )
+            ..fetchData<List<Tv>>(
+              getIt.get<HomeRepo>().fetchTv(Assets.popularTv),
+            )
+            ..fetchData<List<Tv>>(
+              getIt.get<HomeRepo>().fetchTv(Assets.topRatedTv),
+            )
+            ..fetchData<List<Movie>>(
+              getIt.get<HomeRepo>().fetchMovies(Assets.upcomingMovies),
+            ),
+        ),
+      ],
       child: Scaffold(
         appBar: BasicAppbar(
           hideBack: true,

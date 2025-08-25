@@ -4,22 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/utils/assets.dart';
 
-import '../../views_model/reviews_cubit/reviews_cubit.dart';
+import '../../../../../core/cubit/generic_cubit.dart';
 
 class ReviewsListview extends StatelessWidget {
   const ReviewsListview({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ReviewsCubit, ReviewsState>(
+    return BlocBuilder<GenericCubit, GenericState>(
       builder: (context, state) {
-        if (state is ReviewsLoading) {
+        if (state is GenericLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is ReviewsSuccess) {
+        } else if (state is GenericSuccess) {
           return SizedBox(
             height: 250,
             child: ListView.separated(
-              itemCount: state.reviews.length,
+              itemCount: state.data.length,
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => const SizedBox(width: 10),
               itemBuilder: (context, index) => Container(
@@ -40,7 +40,7 @@ class ReviewsListview extends StatelessWidget {
                           children: [
                             CachedNetworkImage(
                               imageUrl:
-                                  '${Assets.baseImageUrl}${state.reviews[index].authorDetails?.avatarPath}',
+                                  '${Assets.baseImageUrl}${state.data[index].authorDetails?.avatarPath}',
                               imageBuilder: (context, imageProvider) =>
                                   CircleAvatar(backgroundImage: imageProvider),
                               errorWidget: (context, url, error) =>
@@ -50,7 +50,7 @@ class ReviewsListview extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              state.reviews[index].author!,
+                              state.data[index].author!,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class ReviewsListview extends StatelessWidget {
                               color: Colors.amber,
                             ),
                             Text(
-                              '${state.reviews[index].authorDetails?.rating ?? 'No Rating'} ',
+                              '${state.data[index].authorDetails?.rating ?? 'No Rating'} ',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class ReviewsListview extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      state.reviews[index].content!,
+                      state.data[index].content!,
                       maxLines: 9,
                       style: const TextStyle(color: Colors.grey, fontSize: 14),
                     ),
@@ -89,7 +89,7 @@ class ReviewsListview extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is ReviewsFailure) {
+        } else if (state is GenericFailure) {
           return Center(child: Text(state.errMsg));
         } else {
           return const SizedBox();

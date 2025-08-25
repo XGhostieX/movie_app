@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/cubit/generic_cubit.dart';
+import '../../../../core/models/cast.dart';
+import '../../../../core/models/genre.dart';
+import '../../../../core/models/review/review.dart';
 import '../../../../core/models/tv.dart';
+import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/basic_appbar.dart';
-import '../views_model/cast_cubit/cast_cubit.dart';
-import '../views_model/genres_cubit/genres_cubit.dart';
-import '../views_model/recommendations_tv_cubit/recommendations_tv_cubit.dart';
-import '../views_model/reviews_cubit/reviews_cubit.dart';
-import '../views_model/similar_tv_cubit/similar_tv_cubit.dart';
+import '../../../home/data/repos/home_repo.dart';
+import '../../data/repos/details_repo.dart';
 import '../views_model/trailer_cubit/trailer_cubit.dart';
 import 'widgets/tv_details_view_body.dart';
 
@@ -22,17 +24,23 @@ class TvDetailsView extends StatelessWidget {
         BlocProvider(
           create: (context) => TrailerCubit()..fetchTvTrailer(tv.id!),
         ),
-        BlocProvider(create: (context) => GenresCubit()..fetchTvGenres(tv.id!)),
-        BlocProvider(create: (context) => CastCubit()..fetchTvCast(tv.id!)),
         BlocProvider(
-          create: (context) => ReviewsCubit()..fetchTvReviews(tv.id!),
-        ),
-        BlocProvider(
-          create: (context) =>
-              RecommendationsTvCubit()..fetchRecommendationsTv(tv.id!),
-        ),
-        BlocProvider(
-          create: (context) => SimilarTvCubit()..fetchSimilarTv(tv.id!),
+          create: (context) => GenericCubit()
+            ..fetchData<List<Genre>>(
+              getIt.get<DetailsRepo>().fetchGenres('tv/$tv.id'),
+            )
+            ..fetchData<List<Cast>>(
+              getIt.get<DetailsRepo>().fetchCast('tv/$tv.id/credits'),
+            )
+            ..fetchData<List<Review>>(
+              getIt.get<DetailsRepo>().fetchReviews('tv/$tv.id/reviews'),
+            )
+            ..fetchData<List<Tv>>(
+              getIt.get<HomeRepo>().fetchTv('tv/$tv.id/recommendations'),
+            )
+            ..fetchData<List<Tv>>(
+              getIt.get<HomeRepo>().fetchTv('tv/$tv.id/similar'),
+            ),
         ),
       ],
       child: Scaffold(

@@ -42,7 +42,10 @@ class _SignUpState extends State<SignUp> {
                   decoration: const InputDecoration(hintText: 'Email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please Enter Your Email';
+                    }
+                    if (!(value.contains('@') && value.contains('.'))) {
+                      return 'Please Enter A Valid Email';
                     }
                     return null;
                   },
@@ -54,10 +57,10 @@ class _SignUpState extends State<SignUp> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'PPlease Enter Your password';
                     }
                     if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return 'Password Must be at Least 6 Characters';
                     }
                     return null;
                   },

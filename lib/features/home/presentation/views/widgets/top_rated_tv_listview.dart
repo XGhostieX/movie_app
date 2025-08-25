@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/cubit/generic_cubit.dart';
 import '../../../../../core/widgets/shimmer_skeleton.dart';
-import '../../views_model/top_rated_tv_cubit/top_rated_tv_cubit.dart';
 import '../../../../../core/widgets/tv_card.dart';
 
 class TopRatedTvListview extends StatelessWidget {
@@ -10,22 +10,22 @@ class TopRatedTvListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TopRatedTvCubit, TopRatedTvState>(
+    return BlocBuilder<GenericCubit, GenericState>(
       builder: (context, state) {
-        if (state is TopRatedTvLoading) {
+        if (state is GenericLoading) {
           return const ShimmerSkeleton();
-        } else if (state is TopRatedTvSuccess) {
+        } else if (state is GenericSuccess) {
           return SizedBox(
             height: 300,
             child: ListView.separated(
-              itemCount: state.tv.length,
+              itemCount: state.data.length,
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               separatorBuilder: (context, index) => const SizedBox(width: 10),
-              itemBuilder: (context, index) => TvCard(tv: state.tv[index]),
+              itemBuilder: (context, index) => TvCard(tv: state.data[index]),
             ),
           );
-        } else if (state is TopRatedTvFailure) {
+        } else if (state is GenericFailure) {
           return Center(child: Text(state.errMsg));
         } else {
           return const SizedBox();

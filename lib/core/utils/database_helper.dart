@@ -1,8 +1,22 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DatabaseHelper {
-  Future<Database> initDatabase() async {
+abstract class DatabaseHelper {
+  Future<Database> get database;
+  Future<void> close();
+}
+
+class SQLiteDatabaseHelper implements DatabaseHelper {
+  static Database? _database;
+
+  @override
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'auth.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -15,5 +29,13 @@ class DatabaseHelper {
         password TEXT
       )
     ''');
+  }
+
+  @override
+  Future<void> close() async {
+    if (_database != null) {
+      await _database!.close();
+      _database = null;
+    }
   }
 }

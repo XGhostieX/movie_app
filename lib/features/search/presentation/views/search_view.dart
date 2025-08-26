@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/utils/assets.dart';
+import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/basic_appbar.dart';
+import '../../data/repos/search_repo.dart';
 import '../views_model/search_cubit/search_cubit.dart';
 import '../views_model/search_options_cubit/search_options_cubit.dart';
 import 'widgets/search_view_body.dart';
@@ -16,7 +18,7 @@ class SearchView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SearchOptionsCubit()),
-        BlocProvider(create: (context) => SearchCubit()),
+        BlocProvider(create: (context) => SearchCubit(getIt.get<SearchRepo>())),
       ],
       child: Scaffold(
         appBar: BasicAppbar(

@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/models/movie.dart';
 import '../../../../../core/models/tv.dart';
-import '../../../../../core/utils/service_locator.dart';
 import '../../../data/repos/search_repo.dart';
 import '../search_options_cubit/search_options_cubit.dart';
 
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
+  final SearchRepo searchRepo;
   TextEditingController controller = TextEditingController();
-  SearchCubit() : super(SearchInitial());
+  SearchCubit(this.searchRepo) : super(SearchInitial());
 
   void search(String qurey, SearchType searchType) {
     if (qurey.isNotEmpty) {
@@ -29,7 +29,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchSearchMovies(String qurey) async {
     emit(SearchLoading());
-    var result = await getIt.get<SearchRepo>().fetchMovies(qurey);
+    var result = await searchRepo.fetchMovies(qurey);
     result.fold(
       (failure) => emit(SearchFailure(failure)),
       (movies) => emit(SearchMoviesSuccess(movies)),
@@ -38,7 +38,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchSearchTv(String qurey) async {
     emit(SearchLoading());
-    var result = await getIt.get<SearchRepo>().fetchTv(qurey);
+    var result = await searchRepo.fetchTv(qurey);
     result.fold(
       (failure) => emit(SearchFailure(failure)),
       (tv) => emit(SearchTvSuccess(tv)),

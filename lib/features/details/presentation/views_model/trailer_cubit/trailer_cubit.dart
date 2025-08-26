@@ -3,19 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../core/models/trailer.dart';
-import '../../../../../core/utils/service_locator.dart';
 import '../../../data/repos/details_repo.dart';
 
 part 'trailer_state.dart';
 
 class TrailerCubit extends Cubit<TrailerState> {
-  TrailerCubit() : super(TrailerInitial());
+  final DetailsRepo detailsRepo;
+  TrailerCubit(this.detailsRepo) : super(TrailerInitial());
 
   Future<void> fetchMovieTrailer(int id) async {
     emit(TrailerLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTrailer(
-      'movie/$id/videos',
-    );
+    var result = await detailsRepo.fetchTrailer('movie/$id/videos');
     result.fold((failure) => emit(TrailerFailure(failure)), (trailers) {
       Trailer trailer = trailers;
       YoutubePlayerController controller = YoutubePlayerController(
@@ -28,7 +26,7 @@ class TrailerCubit extends Cubit<TrailerState> {
 
   Future<void> fetchTvTrailer(int id) async {
     emit(TrailerLoading());
-    var result = await getIt.get<DetailsRepo>().fetchTrailer('tv/$id/videos');
+    var result = await detailsRepo.fetchTrailer('tv/$id/videos');
     result.fold((failure) => emit(TrailerFailure(failure)), (trailers) {
       Trailer trailer = trailers;
       YoutubePlayerController controller = YoutubePlayerController(

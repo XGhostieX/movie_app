@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/api_url.dart';
 import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/carousel_shimmer_skeleton.dart';
+import '../../../data/repos/home_repo.dart';
 import '../../views_model/trending_movies_cubit/trending_movies_cubit.dart';
 
 class TrendingMovies extends StatefulWidget {
@@ -23,7 +25,8 @@ class _TrendingMoviesState extends State<TrendingMovies> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TrendingMoviesCubit()..fetchTrendingMovies(),
+      create: (context) =>
+          TrendingMoviesCubit(getIt.get<HomeRepo>())..fetchTrendingMovies(),
       child: BlocBuilder<TrendingMoviesCubit, TrendingMoviesState>(
         builder: (context, state) {
           if (state is TrendingMoviesLoading) {

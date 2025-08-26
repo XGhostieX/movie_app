@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/auth/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/data/datasources/auth_local_datasource_impl.dart';
 import '../../features/auth/data/repos/auth_repo.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
 import '../../features/details/data/repos/details_repo.dart';
@@ -17,10 +19,15 @@ final getIt = GetIt.instance;
 
 void setup() {
   getIt.registerSingleton<Dio>(Dio());
-  getIt.registerSingleton<DatabaseHelper>(DatabaseHelper());
+  getIt.registerSingleton<DatabaseHelper>(SQLiteDatabaseHelper());
   getIt.registerSingleton<ApiService>(ApiService(getIt.get<Dio>()));
   getIt.registerSingleton<Mapper>(MapperImpl());
-  getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt.get<DatabaseHelper>()));
+  getIt.registerSingleton<AuthLocalDataSource>(
+    AuthLocalDataSourceImpl(getIt.get<DatabaseHelper>()),
+  );
+  getIt.registerSingleton<AuthRepo>(
+    AuthRepoImpl(getIt.get<AuthLocalDataSource>()),
+  );
   getIt.registerSingleton<HomeRepo>(
     HomeRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
   );

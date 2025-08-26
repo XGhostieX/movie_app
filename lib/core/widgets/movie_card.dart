@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../models/movie.dart';
 import '../theme/app_colors.dart';
+import '../utils/api_url.dart';
 import '../utils/app_router.dart';
-import '../utils/assets.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -51,7 +51,7 @@ class MovieCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       // height: 100,
                       // width: 100,
-                      imageUrl: '${Assets.baseImageUrl}${movie.posterPath}',
+                      imageUrl: '${ApiUrl.baseImageUrl}${movie.posterPath}',
                       errorWidget: (context, url, error) =>
                           const Center(child: Icon(Icons.error_rounded)),
                     ),

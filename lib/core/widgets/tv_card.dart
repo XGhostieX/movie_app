@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../models/tv.dart';
 import '../theme/app_colors.dart';
+import '../utils/api_url.dart';
 import '../utils/app_router.dart';
-import '../utils/assets.dart';
 
 class TvCard extends StatelessWidget {
   final Tv tv;
@@ -51,7 +51,7 @@ class TvCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       // height: 100,
                       // width: 100,
-                      imageUrl: '${Assets.baseImageUrl}${tv.posterPath}',
+                      imageUrl: '${ApiUrl.baseImageUrl}${tv.posterPath}',
                       errorWidget: (context, url, error) =>
                           const Center(child: Icon(Icons.error_rounded)),
                     ),

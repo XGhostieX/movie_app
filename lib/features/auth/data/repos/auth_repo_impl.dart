@@ -2,13 +2,15 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/models/user.dart';
 import '../../../../core/utils/database_helper.dart';
-import '../../../../core/utils/service_locator.dart';
 import 'auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo {
+  final DatabaseHelper databaseHelper;
+
+  AuthRepoImpl(this.databaseHelper);
   @override
   Future<Either> signIn(User user) async {
-    final db = await getIt.get<DatabaseHelper>().initDatabase();
+    final db = await databaseHelper.initDatabase();
     final result = await db.query(
       'users',
       where: 'email = ? AND password = ?',
@@ -23,7 +25,7 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either> signUp(User user) async {
-    final db = await getIt.get<DatabaseHelper>().initDatabase();
+    final db = await databaseHelper.initDatabase();
     final result = await db.query(
       'users',
       where: 'email = ?',

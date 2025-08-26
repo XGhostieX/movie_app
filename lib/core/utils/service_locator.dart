@@ -13,23 +13,21 @@ import 'api_service.dart';
 import 'database_helper.dart';
 import 'mapper.dart';
 
-// import '../../features/home/data/repos/home_repo_impl.dart';
-
 final getIt = GetIt.instance;
 
 void setup() {
   getIt.registerSingleton<Dio>(Dio());
   getIt.registerSingleton<DatabaseHelper>(DatabaseHelper());
-  getIt.registerSingleton<ApiService>(ApiService());
-  getIt.registerSingleton<AuthRepo>(AuthRepoImpl());
-  getIt.registerSingleton<HomeRepo>(HomeRepoImpl());
-  getIt.registerSingleton<DetailsRepo>(DetailsRepoImpl());
-  getIt.registerSingleton<SearchRepo>(SearchRepoImpl());
+  getIt.registerSingleton<ApiService>(ApiService(getIt.get<Dio>()));
   getIt.registerSingleton<Mapper>(MapperImpl());
-  // getIt.registerSingleton<FirebaseService>(
-  //   FirebaseService(firestore: getIt.get<FirebaseFirestore>()),
-  // );
-  // getIt.registerSingleton<HomeRepoImpl>(
-  //   HomeRepoImpl(getIt.get<FirebaseService>()),
-  // );
+  getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt.get<DatabaseHelper>()));
+  getIt.registerSingleton<HomeRepo>(
+    HomeRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
+  getIt.registerSingleton<DetailsRepo>(
+    DetailsRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
+  getIt.registerSingleton<SearchRepo>(
+    SearchRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
 }

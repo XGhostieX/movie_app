@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/auth/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/data/datasources/auth_local_datasource_impl.dart';
 import '../../features/auth/data/repos/auth_repo.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
 import '../../features/details/data/repos/details_repo.dart';
@@ -9,33 +11,30 @@ import '../../features/home/data/repos/home_repo.dart';
 import '../../features/home/data/repos/home_repo_impl.dart';
 import '../../features/search/data/repos/search_repo.dart';
 import '../../features/search/data/repos/search_repo_impl.dart';
-import '../usecases/is_authenticated_usecase.dart';
-import '../usecases/signin_usecase.dart';
-import '../usecases/signup_usecase.dart';
 import 'api_service.dart';
-import 'auth_api_service.dart';
-import 'dio_client.dart';
-
-// import '../../features/home/data/repos/home_repo_impl.dart';
+import 'database_helper.dart';
+import 'mapper.dart';
 
 final getIt = GetIt.instance;
 
 void setup() {
-  getIt.registerSingleton<DioClient>(DioClient());
   getIt.registerSingleton<Dio>(Dio());
-  getIt.registerSingleton<AuthApiService>(AuthApiService());
-  getIt.registerSingleton<AuthRepo>(AuthRepoImpl());
-  getIt.registerSingleton<SignupUsecase>(SignupUsecase());
-  getIt.registerSingleton<SigninUsecase>(SigninUsecase());
-  getIt.registerSingleton<IsAuthenticatedUsecase>(IsAuthenticatedUsecase());
-  getIt.registerSingleton<ApiService>(ApiService());
-  getIt.registerSingleton<HomeRepo>(HomeRepoImpl());
-  getIt.registerSingleton<DetailsRepo>(DetailsRepoImpl());
-  getIt.registerSingleton<SearchRepo>(SearchRepoImpl());
-  // getIt.registerSingleton<FirebaseService>(
-  //   FirebaseService(firestore: getIt.get<FirebaseFirestore>()),
-  // );
-  // getIt.registerSingleton<HomeRepoImpl>(
-  //   HomeRepoImpl(getIt.get<FirebaseService>()),
-  // );
+  getIt.registerSingleton<DatabaseHelper>(SQLiteDatabaseHelper());
+  getIt.registerSingleton<ApiService>(ApiService(getIt.get<Dio>()));
+  getIt.registerSingleton<Mapper>(MapperImpl());
+  getIt.registerSingleton<AuthLocalDataSource>(
+    AuthLocalDataSourceImpl(getIt.get<DatabaseHelper>()),
+  );
+  getIt.registerSingleton<AuthRepo>(
+    AuthRepoImpl(getIt.get<AuthLocalDataSource>()),
+  );
+  getIt.registerSingleton<HomeRepo>(
+    HomeRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
+  getIt.registerSingleton<DetailsRepo>(
+    DetailsRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
+  getIt.registerSingleton<SearchRepo>(
+    SearchRepoImpl(getIt.get<ApiService>(), getIt.get<Mapper>()),
+  );
 }

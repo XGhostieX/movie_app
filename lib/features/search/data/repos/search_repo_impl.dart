@@ -3,20 +3,19 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/models/movie.dart';
 import '../../../../core/models/tv.dart';
 import '../../../../core/utils/api_service.dart';
-import '../../../../core/utils/service_locator.dart';
+import '../../../../core/utils/mapper.dart';
 import 'search_repo.dart';
 
 class SearchRepoImpl implements SearchRepo {
+  final ApiService apiService;
+  final Mapper mapper;
+
+  SearchRepoImpl(this.apiService, this.mapper);
   @override
-  Future<Either> fetchSearchMovies(String qurey) async {
+  Future<Either> fetchMovies(String qurey) async {
     try {
-      var data = await getIt.get<ApiService>().search(
-        endPoint: 'search/movie?query=$qurey',
-      );
-      List<Movie> movies = [];
-      for (var element in data['results']) {
-        movies.add(Movie.fromMap(element));
-      }
+      var data = await apiService.search(endPoint: 'search/movie?query=$qurey');
+      List<Movie> movies = mapper.movieMapper(data);
       return right(movies);
     } catch (e) {
       return Left(e.toString());
@@ -25,15 +24,10 @@ class SearchRepoImpl implements SearchRepo {
 
   @override
   @override
-  Future<Either> fetchSearchTv(String qurey) async {
+  Future<Either> fetchTv(String qurey) async {
     try {
-      var data = await getIt.get<ApiService>().search(
-        endPoint: 'search/tv?query=$qurey',
-      );
-      List<Tv> tvs = [];
-      for (var element in data['results']) {
-        tvs.add(Tv.fromMap(element));
-      }
+      var data = await apiService.search(endPoint: 'search/tv?query=$qurey');
+      List<Tv> tvs = mapper.tvMapper(data);
       return right(tvs);
     } catch (e) {
       return Left(e.toString());

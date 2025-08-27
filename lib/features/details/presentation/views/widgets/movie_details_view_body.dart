@@ -12,7 +12,12 @@ import 'video_player.dart';
 
 class MovieDetailsViewBody extends StatelessWidget {
   final Movie movie;
-  const MovieDetailsViewBody({super.key, required this.movie});
+  final String endPoint;
+  const MovieDetailsViewBody({
+    super.key,
+    required this.movie,
+    required this.endPoint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class MovieDetailsViewBody extends StatelessWidget {
                 const SizedBox(height: 15),
                 CategoryTitle(title: movie.title!),
                 const SizedBox(height: 15),
-                const GenresChip(),
+                GenresChip(endPoint: endPoint),
                 const SizedBox(height: 15),
                 ReleaseDateRate(
                   releaseDate: movie.releaseDate!,
@@ -45,24 +50,24 @@ class MovieDetailsViewBody extends StatelessWidget {
                 const SizedBox(height: 15),
                 const CategoryTitle(title: 'Cast'),
                 const SizedBox(height: 15),
-                const CastListview(),
+                CastListview(endPoint: endPoint),
                 const SizedBox(height: 15),
                 const CategoryTitle(title: 'Reviews'),
                 const SizedBox(height: 15),
-                const ReviewsListview(),
+                ReviewsListview(endPoint: endPoint),
                 const SizedBox(height: 15),
                 const CategoryTitle(title: 'Recommendations'),
                 const SizedBox(height: 15),
               ],
             ),
           ),
-          const MovieRecommendations(),
+          MovieRecommendations(endPoint: endPoint),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: CategoryTitle(title: 'Similar Movies'),
           ),
           const SizedBox(height: 15),
-          const SimilarMovies(),
+          SimilarMovies(endPoint: endPoint),
         ],
       ),
     );

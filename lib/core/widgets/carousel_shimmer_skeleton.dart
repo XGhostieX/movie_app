@@ -14,8 +14,8 @@ class CarouselShimmerSkeleton extends StatelessWidget {
             baseColor: Colors.grey.shade300,
             highlightColor: Colors.grey.shade100,
             child: Container(
-              width: 250,
-              height: 265,
+              width: 220,
+              height: 270,
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(20),
@@ -26,7 +26,7 @@ class CarouselShimmerSkeleton extends StatelessWidget {
         SizedBox(
           height: 15,
           child: ListView.separated(
-            itemCount: 12,
+            itemCount: 16,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 35),
             separatorBuilder: (context, index) => const SizedBox(width: 15),

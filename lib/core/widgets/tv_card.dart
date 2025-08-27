@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../models/tv.dart';
+import '../routing/details_route_provider.dart';
 import '../theme/app_colors.dart';
-import '../utils/app_navigator.dart';
-import '../utils/assets.dart';
-import '../../features/details/presentation/views/tv_details_view.dart';
+import '../utils/api_config.dart';
 
 class TvCard extends StatelessWidget {
   final Tv tv;
@@ -14,7 +14,9 @@ class TvCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AppNavigator.push(context, TvDetailsView(tv: tv)),
+      onTap: () => GoRouter.of(
+        context,
+      ).push(DetailsRouteProvider.kTvDetailsView, extra: tv),
       child: Stack(
         children: [
           Container(
@@ -50,7 +52,7 @@ class TvCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       // height: 100,
                       // width: 100,
-                      imageUrl: '${Assets.baseImageUrl}${tv.posterPath}',
+                      imageUrl: '${ApiConfig.baseImageUrl}${tv.posterPath}',
                       errorWidget: (context, url, error) =>
                           const Center(child: Icon(Icons.error_rounded)),
                     ),

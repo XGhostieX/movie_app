@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/routing/auth_route_provider.dart';
 import '../../../../../core/utils/assets.dart';
 
 class SplashViewBody extends StatefulWidget {
@@ -16,7 +16,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       // ignore: use_build_context_synchronously
-      GoRouter.of(context).pushReplacement(AppRouter.kAuthView);
+      GoRouter.of(context).pushReplacement(AuthRouteProvider.kAuthView);
     });
     super.initState();
   }

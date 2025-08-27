@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/movie.dart';
+import '../routing/details_route_provider.dart';
 import '../theme/app_colors.dart';
 import '../utils/api_config.dart';
-import '../utils/app_router.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -14,8 +14,9 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          GoRouter.of(context).push(AppRouter.kMovieDetailsView, extra: movie),
+      onTap: () => GoRouter.of(
+        context,
+      ).push(DetailsRouteProvider.kMovieDetailsView, extra: movie),
       child: Stack(
         children: [
           Container(

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/models/user.dart';
-import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/routing/auth_route_provider.dart';
+import '../../../../../core/routing/home_route_provider.dart';
 import '../../../../../core/utils/functions/display_message.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/repos/auth_repo.dart';
@@ -94,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                           displayMessage(right, false);
                           GoRouter.of(
                             context,
-                          ).pushReplacement(AppRouter.kHomeView);
+                          ).pushReplacement(HomeRouteProvider.kHomeView);
                         });
                       }
                     },
@@ -112,7 +113,7 @@ class _SignUpState extends State<SignUp> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => GoRouter.of(
                             context,
-                          ).pushReplacement(AppRouter.kSignIn),
+                          ).pushReplacement(AuthRouteProvider.kSignIn),
                       ),
                     ],
                   ),

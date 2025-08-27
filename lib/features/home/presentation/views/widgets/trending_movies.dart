@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/routing/details_route_provider.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/api_config.dart';
-import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/carousel_shimmer_skeleton.dart';
 import '../../../data/repos/home_repo.dart';
@@ -39,9 +39,10 @@ class _TrendingMoviesState extends State<TrendingMovies> {
                   items: state.movies
                       .map(
                         (movie) => GestureDetector(
-                          onTap: () => GoRouter.of(
-                            context,
-                          ).push(AppRouter.kMovieDetailsView, extra: movie),
+                          onTap: () => GoRouter.of(context).push(
+                            DetailsRouteProvider.kMovieDetailsView,
+                            extra: movie,
+                          ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(25),
                             child: CachedNetworkImage(

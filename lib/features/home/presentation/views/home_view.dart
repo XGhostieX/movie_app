@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/utils/app_router.dart';
+import '../../../../core/routing/search_route_provider.dart';
 import '../../../../core/utils/assets.dart';
 import '../../../../core/widgets/basic_appbar.dart';
 import 'widgets/home_view_body.dart';
@@ -17,7 +17,8 @@ class HomeView extends StatelessWidget {
         hideBack: true,
         title: SvgPicture.asset(Assets.logo),
         action: IconButton(
-          onPressed: () => GoRouter.of(context).push(AppRouter.kSearchView),
+          onPressed: () =>
+              GoRouter.of(context).push(SearchRouteProvider.kSearchView),
           icon: const Icon(Icons.search_rounded),
         ),
       ),

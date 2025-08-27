@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/tv.dart';
+import '../routing/details_route_provider.dart';
 import '../theme/app_colors.dart';
 import '../utils/api_config.dart';
-import '../utils/app_router.dart';
 
 class TvCard extends StatelessWidget {
   final Tv tv;
@@ -14,8 +14,9 @@ class TvCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          GoRouter.of(context).push(AppRouter.kTvDetailsView, extra: tv),
+      onTap: () => GoRouter.of(
+        context,
+      ).push(DetailsRouteProvider.kTvDetailsView, extra: tv),
       child: Stack(
         children: [
           Container(

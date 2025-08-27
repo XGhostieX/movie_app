@@ -8,6 +8,7 @@ import 'core/utils/service_locator.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
+  AppRouter.initialize();
   runApp(const MovieApp());
 }
 

@@ -6,7 +6,7 @@ import 'package:movie_app/core/utils/assets.dart';
 
 import '../../../../../core/cubit/generic_cubit.dart';
 import '../../../../../core/models/review/review.dart';
-import '../../../../../core/utils/api_url.dart';
+import '../../../../../core/utils/api_config.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/repos/details_repo.dart';
 
@@ -50,7 +50,7 @@ class ReviewsListview extends StatelessWidget {
                             children: [
                               CachedNetworkImage(
                                 imageUrl:
-                                    '${ApiUrl.baseImageUrl}${state.data[index].authorDetails?.avatarPath}',
+                                    '${ApiConfig.baseImageUrl}${state.data[index].authorDetails?.avatarPath}',
                                 imageBuilder: (context, imageProvider) =>
                                     CircleAvatar(
                                       backgroundImage: imageProvider,

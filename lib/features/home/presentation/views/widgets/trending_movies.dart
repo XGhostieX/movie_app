@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/utils/api_url.dart';
+import '../../../../../core/utils/api_config.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/carousel_shimmer_skeleton.dart';
@@ -48,7 +48,7 @@ class _TrendingMoviesState extends State<TrendingMovies> {
                               // height: 100,
                               // width: 100,
                               imageUrl:
-                                  '${ApiUrl.baseImageUrl}${movie.posterPath}',
+                                  '${ApiConfig.baseImageUrl}${movie.posterPath}',
                               errorWidget: (context, url, error) =>
                                   const Center(
                                     child: Icon(Icons.error_rounded),

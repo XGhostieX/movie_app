@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/cubit/generic_cubit.dart';
 import '../../../../../core/models/cast.dart';
-import '../../../../../core/utils/api_url.dart';
+import '../../../../../core/utils/api_config.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/cast_shimmer_skeleton.dart';
 import '../../../data/repos/details_repo.dart';
@@ -41,7 +41,7 @@ class CastListview extends StatelessWidget {
                           // height: 100,
                           // width: 100,
                           imageUrl:
-                              ApiUrl.baseImageUrl +
+                              ApiConfig.baseImageUrl +
                               state.data[index].profilePath!,
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error_rounded),

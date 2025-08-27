@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/cubit/generic_cubit.dart';
 import '../../../../../core/models/movie.dart';
-import '../../../../../core/utils/api_url.dart';
+import '../../../../../core/utils/api_config.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../../core/widgets/movie_card.dart';
@@ -17,7 +17,7 @@ class TopRatedMoviesListview extends StatelessWidget {
     return BlocProvider(
       create: (context) => GenericCubit()
         ..fetchData<List<Movie>>(
-          getIt.get<HomeRepo>().fetchMovies(ApiUrl.topRatedMovies),
+          getIt.get<HomeRepo>().fetchMovies(HomeEndpoints.topRatedMovies),
         ),
       child: BlocBuilder<GenericCubit, GenericState>(
         builder: (context, state) {

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/cubit/generic_cubit.dart';
 import '../../../../../core/models/tv.dart';
-import '../../../../../core/utils/api_url.dart';
+import '../../../../../core/utils/api_config.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/shimmer_skeleton.dart';
 import '../../../../../core/widgets/tv_card.dart';
@@ -16,7 +16,9 @@ class TopRatedTvListview extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GenericCubit()
-        ..fetchData<List<Tv>>(getIt.get<HomeRepo>().fetchTv(ApiUrl.topRatedTv)),
+        ..fetchData<List<Tv>>(
+          getIt.get<HomeRepo>().fetchTv(HomeEndpoints.topRatedTv),
+        ),
       child: BlocBuilder<GenericCubit, GenericState>(
         builder: (context, state) {
           if (state is GenericLoading) {
